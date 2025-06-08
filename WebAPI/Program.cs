@@ -8,6 +8,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=subscriptions.db"));
 
 builder.Services.AddScoped<SubscriptionCsvLoader>();
+builder.Services.AddScoped<CustomerCsvLoader>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -23,12 +24,23 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
 
-    if (!db.Subscriptions.Any())
+    var csvPath = Path.Combine(Directory.GetCurrentDirectory(), "subscription.csv");
+    
+    var customerLoader = scope.ServiceProvider.GetRequiredService<CustomerCsvLoader>();
+    
+    if (File.Exists(csvPath))
     {
-        var loader = scope.ServiceProvider.GetRequiredService<SubscriptionCsvLoader>();
-        var csvPath = Path.Combine(Directory.GetCurrentDirectory(), "subscription.csv");
-        if (File.Exists(csvPath))
-            await loader.LoadFromFileAsync(csvPath);
+        await customerLoader.CreateCustomersFromSubscriptionCsvAsync(csvPath);
+    }
+    else
+    {
+        await customerLoader.LoadSampleDataAsync();
+    }
+    
+    if (!db.Subscriptions.Any() && File.Exists(csvPath))
+    {
+        var subscriptionLoader = scope.ServiceProvider.GetRequiredService<SubscriptionCsvLoader>();
+        await subscriptionLoader.LoadFromFileAsync(csvPath);
     }
 }
 
