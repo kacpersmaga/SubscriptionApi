@@ -3,9 +3,10 @@
 public class Subscription
 {
     public int Id { get; set; }
-    public string Country { get; set; } = null!;
-    public string Product { get; set; } = null!;
-    public string Plan { get; set; } = null!;
-    public DateTime SubscriptionStartDate { get; set; }
-    public int MonthlyRevenue { get; set; }
+    public long CustomerId { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime? CanceledDate { get; set; }
+    public int SubscriptionCost { get; set; }
+    public string SubscriptionInterval { get; set; } = null!;
+    public bool WasSubscriptionPaid { get; set; }
 }
