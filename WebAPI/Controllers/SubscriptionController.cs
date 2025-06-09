@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.DTOs;
 using WebAPI.DTOs.Subscription;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers;
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -76,6 +78,7 @@ public class SubscriptionController : ControllerBase
         return subscriptions;
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<Subscription>> CreateSubscription(SubscriptionCreateDto subscriptionDto)
     {
@@ -101,6 +104,7 @@ public class SubscriptionController : ControllerBase
         return CreatedAtAction(nameof(GetSubscription), new { id = subscription.Id }, subscription);
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateSubscription(int id, SubscriptionUpdateDto subscriptionDto)
     {
@@ -142,6 +146,7 @@ public class SubscriptionController : ControllerBase
         return NoContent();
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteSubscription(int id)
     {

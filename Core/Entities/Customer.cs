@@ -9,7 +9,6 @@ public class Customer
     public string LastName { get; set; } = null!;
     public string Email { get; set; } = null!;
     public DateTime CreatedDate { get; set; }
-    
     [JsonIgnore]
     public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
 }

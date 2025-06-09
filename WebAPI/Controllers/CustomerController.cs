@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.DTOs;
 using WebAPI.DTOs.Customer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers;
 
@@ -41,6 +42,7 @@ public class CustomerController : ControllerBase
         return customer;
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<Customer>> CreateCustomer(CustomerCreateDto customerDto)
     {
@@ -70,6 +72,7 @@ public class CustomerController : ControllerBase
         return CreatedAtAction(nameof(GetCustomer), new { id = customer.Id }, customer);
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateCustomer(long id, CustomerUpdateDto customerDto)
     {
@@ -100,6 +103,7 @@ public class CustomerController : ControllerBase
         return NoContent();
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCustomer(long id)
     {
