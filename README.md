@@ -40,37 +40,10 @@ CustomerId,CreatedDate,CanceledDate,SubscriptionCost,SubscriptionInterval,WasSub
 
 ## Uruchomienie aplikacji
 
-1. **Zbuduj projekt:**
-
-   ```
-   dotnet build
-   ```
-
-2. **Zastosuj migracje do bazy danych (jeśli wymagane):**
-
-   ```
-   dotnet ef database update
-   ```
-
-3. **Uruchom aplikację:**
-
-   ```
-   dotnet run --project WebAPI
-   ```
-
-4. **Dostęp do dokumentacji API (Swagger):**
-
-   Otwórz w przeglądarce:
-
-   ```
-   https://localhost:5001/swagger
-   ```
-
-   lub
-
-   ```
-   http://localhost:5000/swagger
-   ```
+1. Otwórz projekt w środowisku (np. JetBrains Rider lub Visual Studio).
+2. Uruchom projekt (np. przez `dotnet run` albo przyciskiem "Run").
+3. Otwórz Swagger UI pod adresem `https://localhost:{port}/swagger` – znajdziesz tam dokumentację API i możliwość jego testowania.
+4. Aplikacja korzysta z EF Core i tworzy bazę danych automatycznie — **nie musisz uruchamiać `dotnet ef migrations` ani ręcznie tworzyć bazy**.
 
    W Swaggerze można testować wszystkie dostępne endpointy oraz wprowadzać dane wejściowe.
 
